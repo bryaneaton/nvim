@@ -28,7 +28,11 @@ return {
       vim.keymap.set('n', '<leader>fa', function()
         builtin.find_files { follow = true, no_ignore = true, hidden = true }
       end, { desc = 'Find all files' })
-      vim.keymap.set('n', '<leader>fw', builtin.live_grep, { desc = 'Find word' })
+      vim.keymap.set('n', '<leader>fw', function()
+        local word = vim.fn.expand('<cword>')
+        builtin.find_files({ default_text = word })
+      end, { desc = 'Find files with word under cursor' })
+      vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = 'Find live grep' })
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help' })
       vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Find old files' })

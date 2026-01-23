@@ -210,6 +210,69 @@ return {
         -- ts_ls = {},
         --
 
+        harper_ls = {
+          -- cmd = { vim.fn.stdpath('data') .. '/mason/bin/harper-ls', '--stdio' },
+          filetypes = {
+            'markdown',
+            'text',
+            'txt',
+            'plaintext',
+            'rst',
+            'tex',
+            'typst',
+            'gitcommit',
+            'python',
+            'json',
+            'yaml',
+            'yml',
+            'html',
+            'xml',
+            'org',
+            'asciidoc',
+            'adoc',
+            'conf',
+            'config',
+            'dockerfile',
+            'sh',
+            'bash',
+            'lua',
+            'vim',
+            'help',
+          },
+          settings = {
+            ['harper-ls'] = {
+              userDictPath = '',
+              workspaceDictPath = '',
+              fileDictPath = '',
+              linters = {
+                SpellCheck = true,
+                SpelledNumbers = false,
+                AnA = true,
+                SentenceCapitalization = true,
+                UnclosedQuotes = true,
+                WrongQuotes = false,
+                LongSentences = true,
+                RepeatedWords = true,
+                Spaces = true,
+                Matcher = true,
+                CorrectNumberSuffix = true,
+              },
+              codeActions = {
+                ForceStable = false,
+              },
+              markdown = {
+                IgnoreLinkTitle = false,
+              },
+              diagnosticSeverity = 'hint',
+              isolateEnglish = false,
+              dialect = 'American',
+              maxFileLength = 120000,
+              ignoredLintsPath = '',
+              excludePatterns = {},
+            },
+          },
+        },
+
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -242,6 +305,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'harper-ls', -- Grammar and spell checker
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -262,4 +326,3 @@ return {
     end,
   },
 }
-
