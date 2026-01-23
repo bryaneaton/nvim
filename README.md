@@ -1,124 +1,205 @@
-# kickstart.nvim
+# Bryan's Neovim Configuration
 
 ## Introduction
 
-A starting point for Neovim that is:
+A modern, feature-rich Neovim configuration built on [Kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) with extensive customizations and enhancements.
 
-* Small
-* Single-file
-* Completely Documented
+This configuration provides:
 
-**NOT** a Neovim distribution, but instead a starting point for your configuration.
+* **Modern LSP Integration** - Automatic language server installation and configuration
+* **Advanced Code Completion** - Powered by blink.cmp with snippet support
+* **Powerful File Navigation** - Telescope with fuzzy finding and multi-grep capabilities
+* **Enhanced UI** - Tokyo Night theme with bufferline and rich visual indicators
+* **Git Integration** - GitSigns for inline git information and telescope git commands
+* **Python Development** - Full debugging support with nvim-dap
+* **Modular Architecture** - Clean separation of plugin configurations
 
-## Installation
+**Built for productivity** with sensible defaults and powerful workflows.
 
-### Install Neovim
+## ✨ Key Features
 
-Kickstart.nvim targets *only* the latest
-['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest
-['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim.
-If you are experiencing issues, please make sure you have the latest versions.
+### 🧠 Language Server Protocol (LSP)
+- **Mason Integration**: Automatic installation of language servers, formatters, and linters
+- **Multi-language Support**: Pre-configured for Python, Lua, JavaScript/TypeScript, Go, Rust, and more
+- **Smart Diagnostics**: Real-time error detection and suggestions
+- **Code Actions**: Automated fixes and refactoring capabilities
 
-### Install External Dependencies
+### 🔍 Advanced Search & Navigation
+- **Telescope Fuzzy Finder**: Lightning-fast file and content search
+- **Multi-grep**: Search across files with pattern and file type filtering (`<leader>fg`)
+- **Live Grep**: Real-time text search across the entire project
+- **Git Integration**: Browse commits, status, and diffs directly in Telescope
 
-External Requirements:
-- Basic utils: `git`, `make`, `unzip`, C Compiler (`gcc`)
-- [ripgrep](https://github.com/BurntSushi/ripgrep#installation),
-  [fd-find](https://github.com/sharkdp/fd#installation)
-- Clipboard tool (xclip/xsel/win32yank or other depending on the platform)
-- A [Nerd Font](https://www.nerdfonts.com/): optional, provides various icons
-  - if you have it set `vim.g.have_nerd_font` in `init.lua` to true
-- Emoji fonts (Ubuntu only, and only if you want emoji!) `sudo apt install fonts-noto-color-emoji`
-- Language Setup:
-  - If you want to write Typescript, you need `npm`
-  - If you want to write Golang, you will need `go`
-  - etc.
+### 📝 Intelligent Code Completion
+- **Blink.cmp Engine**: Modern, fast completion with LSP integration
+- **Snippet Support**: LuaSnip integration for code snippets
+- **Context-aware Suggestions**: Smart completions based on file type and context
 
-> [!NOTE]
-> See [Install Recipes](#Install-Recipes) for additional Windows and Linux specific notes
-> and quick install snippets
+### 🎨 Beautiful UI & UX
+- **Tokyo Night Theme**: Modern dark theme with excellent readability
+- **Bufferline**: Visual buffer management with tabs
+- **Which-key**: Interactive keybinding hints and discovery
+- **Treesitter**: Advanced syntax highlighting and code understanding
 
-### Install Kickstart
+### 🔧 Developer Tools
+- **Python Debugging**: Full DAP integration for Python development
+- **Git Integration**: GitSigns for inline git blame, hunks, and staging
+- **Auto-formatting**: Conform.nvim for consistent code formatting
+- **Todo Comments**: Highlight and navigate TODO/FIXME/NOTE comments
 
-> [!NOTE]
-> [Backup](#FAQ) your previous configuration (if any exists)
+### ⚡ Performance & Quality of Life
+- **Lazy Loading**: Plugins load only when needed for fast startup
+- **Smart Indentation**: Automatic indent detection
+- **File Browser**: Telescope file browser for easy navigation
+- **Session Management**: Restore your workspace exactly as you left it
 
-Neovim's configurations are located under the following paths, depending on your OS:
+## 🚀 Installation
 
-| OS | PATH |
-| :- | :--- |
-| Linux, MacOS | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim` |
-| Windows (cmd)| `%localappdata%\nvim\` |
-| Windows (powershell)| `$env:LOCALAPPDATA\nvim\` |
+### Prerequisites
 
-#### Recommended Step
+This configuration requires **Neovim 0.9+** (latest stable recommended).
 
-[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo
-so that you have your own copy that you can modify, then install by cloning the
-fork to your machine using one of the commands below, depending on your OS.
+**Required Dependencies:**
+- `git` - Version control
+- `make` - Build tool for native extensions
+- `unzip` - Archive extraction
+- C Compiler (`gcc`/`clang`) - For compiling native modules
+- [ripgrep](https://github.com/BurntSushi/ripgrep#installation) - Fast text search
+- [fd-find](https://github.com/sharkdp/fd#installation) - Fast file finder
 
-> [!NOTE]
-> Your fork's URL will be something like this:
-> `https://github.com/<your_github_username>/kickstart.nvim.git`
+**Optional but Recommended:**
+- [Nerd Font](https://www.nerdfonts.com/) - For icons and symbols
+- Clipboard tool (`xclip`/`xsel`/`win32yank`) - System clipboard integration
+- Language-specific tools (installed automatically via Mason):
+  - `npm` - For JavaScript/TypeScript development
+  - `python` - For Python development and debugging
+  - `go` - For Go development
+  - `cargo` - For Rust development
 
-You likely want to remove `lazy-lock.json` from your fork's `.gitignore` file
-too - it's ignored in the kickstart repo to make maintenance easier, but it's
-[recommended to track it in version control](https://lazy.folke.io/usage/lockfile).
+### Quick Install
 
-#### Clone kickstart.nvim
-
-> [!NOTE]
-> If following the recommended step above (i.e., forking the repo), replace
-> `nvim-lua` with `<your_github_username>` in the commands below
-
-<details><summary> Linux and Mac </summary>
-
-```sh
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+#### 1. Backup Existing Configuration
+```bash
+# Backup your current nvim config (if it exists)
+mv ~/.config/nvim ~/.config/nvim.backup
+mv ~/.local/share/nvim ~/.local/share/nvim.backup
 ```
 
-</details>
-
-<details><summary> Windows </summary>
-
-If you're using `cmd.exe`:
-
-```
-git clone https://github.com/nvim-lua/kickstart.nvim.git "%localappdata%\nvim"
+#### 2. Clone This Configuration
+```bash
+git clone https://github.com/bryaneaton/nvim.git ~/.config/nvim
 ```
 
-If you're using `powershell.exe`
-
-```
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${env:LOCALAPPDATA}\nvim"
-```
-
-</details>
-
-### Post Installation
-
-Start Neovim
-
-```sh
+#### 3. Start Neovim
+```bash
 nvim
 ```
 
-That's it! Lazy will install all the plugins you have. Use `:Lazy` to view
-the current plugin status. Hit `q` to close the window.
+The configuration will automatically:
+- Install the Lazy.nvim plugin manager
+- Download and install all plugins
+- Set up language servers via Mason
+- Configure all keybindings and settings
 
-#### Read The Friendly Documentation
+#### 4. Health Check
+After installation, run `:checkhealth` to verify everything is working correctly.
 
-Read through the `init.lua` file in your configuration folder for more
-information about extending and exploring Neovim. That also includes
-examples of adding popularly requested plugins.
+## ⌨️ Key Bindings
 
-> [!NOTE]
-> For more information about a particular plugin check its repository's documentation.
+**Leader Key:** `<Space>`
+
+### File Operations
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<leader>ff` | Find Files | Fuzzy find files in project |
+| `<leader>fa` | Find All | Find all files (including hidden) |
+| `<leader>fw` | Find Word | Find files containing word under cursor |
+| `<leader>fl` | Live Grep | Search text across all files |
+| `<leader>fb` | Find Buffers | Search open buffers |
+| `<leader>fo` | Old Files | Recently opened files |
+| `<leader>fg` | Multi-grep | Advanced search with file filtering |
+
+### Buffer Management
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<Tab>` | Next Buffer | Switch to next buffer |
+| `<S-Tab>` | Previous Buffer | Switch to previous buffer |
+| `<leader>x` | Close Buffer | Close current buffer |
+| `<leader>bo` | Close Others | Close all other buffers |
+| `<leader>br` | Close Right | Close buffers to the right |
+| `<leader>bl` | Close Left | Close buffers to the left |
+
+### Git Integration
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<leader>cm` | Git Commits | Browse git commit history |
+| `<leader>gt` | Git Status | View git status in Telescope |
+
+### LSP & Diagnostics
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<leader>fd` | Find Diagnostics | Show all diagnostics |
+| `<leader>q` | Quickfix | Open diagnostic quickfix list |
+| `gd` | Go to Definition | Jump to symbol definition |
+| `gr` | References | Find all references |
+| `K` | Hover | Show documentation |
+
+### Navigation
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<C-h/j/k/l>` | Window Navigation | Move between splits |
+| `<Esc>` | Clear Highlights | Clear search highlights |
+
+## 🏗️ Configuration Structure
+
+```
+~/.config/nvim/
+├── init.lua                    # Main entry point and core settings
+├── lazy-lock.json             # Plugin version lockfile
+├── lua/
+│   ├── config/
+│   │   └── telescope/
+│   │       └── multigrep.lua  # Custom multigrep functionality
+│   └── custom/
+│       └── plugins/           # Modular plugin configurations
+│           ├── lsp.lua        # Language server setup
+│           ├── telescope.lua  # File finder & search
+│           ├── blink.lua      # Code completion
+│           ├── bufferline.lua # Buffer management UI
+│           ├── colorscheme.lua# Theme configuration
+│           ├── treesitter.lua # Syntax highlighting
+│           ├── gitsigns.lua   # Git integration
+│           ├── python.lua     # Python debugging
+│           └── ...            # Other plugin configs
+└── README.md                  # This file
+```
+
+## 🔧 Customization
+
+### Adding New Plugins
+Create a new file in `lua/custom/plugins/` following this pattern:
+```lua
+return {
+  'plugin-author/plugin-name',
+  config = function()
+    -- Plugin configuration here
+  end,
+}
+```
+
+### Modifying Keybindings
+Edit the relevant plugin file in `lua/custom/plugins/` or add custom keymaps in `init.lua`.
+
+### Changing Theme
+Modify `lua/custom/plugins/colorscheme.lua` to use a different colorscheme.
 
 
-### Getting Started
+## 📚 Learning Resources
 
-[The Only Video You Need to Get Started with Neovim](https://youtu.be/m8C0Cq9Uv9o)
+- [Neovim Documentation](https://neovim.io/doc/)
+- [Lua Guide for Neovim](https://neovim.io/doc/user/lua-guide.html)
+- [The Only Video You Need to Get Started with Neovim](https://youtu.be/m8C0Cq9Uv9o)
+- [Learn Lua in 15 Minutes](https://learnxinyminutes.com/docs/lua/)
 
 ### FAQ
 
