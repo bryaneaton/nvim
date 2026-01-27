@@ -23,6 +23,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -75,6 +76,22 @@ return {
         require('dapui').toggle()
       end,
       desc = 'Debug: See last session result.',
+    },
+    -- Open REPL for evaluating expressions
+    {
+      '<leader>dr',
+      function()
+        require('dap').repl.open()
+      end,
+      desc = 'Debug: Open REPL',
+    },
+    -- Evaluate expression under cursor or selection
+    {
+      '<leader>de',
+      function()
+        require('dap.ui.widgets').hover()
+      end,
+      desc = 'Debug: Evaluate Expression',
     },
   },
   config = function()
@@ -144,5 +161,8 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- Install Python specific config
+    require('dap-python').setup '~/.virtualenvs/debugpy/bin/python'
   end,
 }
