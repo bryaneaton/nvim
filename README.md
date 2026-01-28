@@ -314,7 +314,7 @@ The configuration includes organized keymap groups for better discoverability:
 - `<leader>g` - **Git** (Git operations)
 - `<leader>b` - **Buffers** (Buffer management)
 - `<leader>t` - **Toggle** (Toggle various features)
-- `<leader>n` - **Neotest** (Testing)
+- `<leader>n` - **VimTest** (Testing)
 - `<leader>h` - **Git Hunk** (Git hunk operations)
 
 ## 🏗️ Configuration Structure
@@ -342,7 +342,7 @@ The configuration includes organized keymap groups for better discoverability:
 │           ├── gitsigns.lua     # Git integration & hunks
 │           ├── diffview.lua     # Advanced git diff views
 │           ├── debug.lua        # Debug Adapter Protocol (DAP)
-│           ├── neotest.lua      # Test runner (vim-test)
+│           ├── vimtest.lua      # Test runner (vim-test)
 │           ├── conform.lua      # Code formatting
 │           ├── lint.lua         # Linting support
 │           ├── neo-tree.lua     # File explorer
