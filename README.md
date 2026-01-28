@@ -57,7 +57,7 @@ This configuration provides:
 
 ### Prerequisites
 
-This configuration requires **Neovim 0.9+** (latest stable recommended).
+This configuration requires **Neovim 0.11.5+** (latest stable recommended).
 
 **Required Dependencies:**
 - `git` - Version control
