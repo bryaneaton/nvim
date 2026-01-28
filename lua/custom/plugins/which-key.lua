@@ -47,9 +47,11 @@ return {
       spec = {
         { '<leader>f', group = 'Find' },
         { '<leader>c', group = 'Code' },
+        { '<leader>r', group = 'Rename' },
         { '<leader>g', group = 'Git' },
         { '<leader>b', group = 'Buffers' },
         { '<leader>t', group = 'Toggle' },
+        { '<leader>n', group = 'Neotest' },
         { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
       },
     },

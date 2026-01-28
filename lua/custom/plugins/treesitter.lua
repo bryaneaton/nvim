@@ -49,7 +49,7 @@ return {
           enable = true,
           keymaps = {
             init_selection = 'gnn',
-            node_incremental = 'grn',
+            node_incremental = 'grj',  -- Changed from 'grn' to avoid LSP conflict
             scope_incremental = 'grc',
             node_decremental = 'grm',
           },

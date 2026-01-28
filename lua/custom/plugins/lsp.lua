@@ -61,12 +61,12 @@ return {
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('<leader>ra', vim.lsp.buf.rename, 'LSP rename')
+          -- map('grn', vim.lsp.buf.rename, '[R]e[n]ame')  -- Disabled due to search conflicts
+          map('<leader>rn', vim.lsp.buf.rename, 'LSP rename')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+          -- map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })  -- Disabled due to potential conflicts
           map('<leader>ca', vim.lsp.buf.code_action, 'LSP code action', { 'n', 'x' })
 
           -- Find references for the word under your cursor.
@@ -221,8 +221,6 @@ return {
             'tex',
             'typst',
             'gitcommit',
-            'python',
-            'json',
             'yaml',
             'yml',
             'html',
@@ -235,7 +233,6 @@ return {
             'dockerfile',
             'sh',
             'bash',
-            'lua',
             'vim',
             'help',
           },
