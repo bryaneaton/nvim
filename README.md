@@ -104,20 +104,93 @@ The configuration will automatically:
 #### 4. Health Check
 After installation, run `:checkhealth` to verify everything is working correctly.
 
-## ⌨️ Key Bindings
+## 🔌 Installed Plugins
+
+### Core LSP & Language Support
+- **[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)** - Language Server Protocol configuration
+- **[mason.nvim](https://github.com/mason-org/mason.nvim)** - Portable package manager for LSPs, DAP servers, linters, and formatters
+- **[mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim)** - Extension to bridge mason.nvim with lspconfig
+- **[mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim)** - Automatic installation of LSP servers and tools
+- **[fidget.nvim](https://github.com/j-hui/fidget.nvim)** - Standalone UI for LSP progress messages
+- **[lazydev.nvim](https://github.com/folke/lazydev.nvim)** - Lua development support for Neovim
+
+### Code Completion & Snippets
+- **[blink.cmp](https://github.com/saghen/blink.cmp)** - Modern completion plugin with LSP integration
+- **[LuaSnip](https://github.com/L3MON4D3/LuaSnip)** - Snippet engine for Neovim
+
+### Fuzzy Finding & Search
+- **[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)** - Fuzzy finder for files, buffers, and more
+- **[telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim)** - FZF sorter for telescope
+- **[telescope-file-browser.nvim](https://github.com/nvim-telescope/telescope-file-browser.nvim)** - File browser extension for telescope
+- **[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)** - Utility functions for Lua plugins
+
+### File Explorer & Navigation
+- **[neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)** - Modern file explorer with git integration
+- **[nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)** - File type icons
+- **[nui.nvim](https://github.com/MunifTanjim/nui.nvim)** - UI component library
+
+### Syntax Highlighting & Parsing
+- **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)** - Advanced syntax highlighting and code parsing
+- **[nvim-ts-context-commentstring](https://github.com/JoosepAlviste/nvim-ts-context-commentstring)** - Smart commenting for embedded languages
+
+### UI & Interface
+- **[tokyonight.nvim](https://github.com/folke/tokyonight.nvim)** - Modern dark colorscheme
+- **[bufferline.nvim](https://github.com/akinsho/bufferline.nvim)** - Enhanced buffer line with tabs
+- **[which-key.nvim](https://github.com/folke/which-key.nvim)** - Interactive keymap hints and documentation
+- **[mini.nvim](https://github.com/echasnovski/mini.nvim)** - Collection of independent modules (statusline, textobjects, surround)
+
+### Git Integration
+- **[gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)** - Git signs, hunks, and blame information
+- **[diffview.nvim](https://github.com/sindrets/diffview.nvim)** - Advanced git diff and merge conflict resolution
+
+### Code Formatting & Linting
+- **[conform.nvim](https://github.com/stevearc/conform.nvim)** - Lightweight formatter with format-on-save
+- **[nvim-lint](https://github.com/mfussenegger/nvim-lint)** - Asynchronous linting
+
+### Testing & Debugging
+- **[nvim-dap](https://github.com/mfussenegger/nvim-dap)** - Debug Adapter Protocol client
+- **[nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)** - Beautiful debugger UI
+- **[nvim-dap-python](https://github.com/mfussenegger/nvim-dap-python)** - Python debugging support
+- **[nvim-dap-go](https://github.com/leoluz/nvim-dap-go)** - Go debugging support
+- **[mason-nvim-dap.nvim](https://github.com/jay-babu/mason-nvim-dap.nvim)** - Mason integration for DAP
+- **[vim-test](https://github.com/vim-test/vim-test)** - Test runner with support for multiple frameworks
+
+### Code Editing & Utilities
+- **[Comment.nvim](https://github.com/numToStr/Comment.nvim)** - Smart commenting with treesitter integration
+- **[nvim-autopairs](https://github.com/windwp/nvim-autopairs)** - Automatic bracket and quote pairing
+- **[todo-comments.nvim](https://github.com/folke/todo-comments.nvim)** - Highlight and search TODO/FIXME comments
+- **[nvim-surround](https://github.com/kylechui/nvim-surround)** - Add/change/delete surrounding delimiters
+- **[guess-indent.nvim](https://github.com/NMAC427/guess-indent.nvim)** - Automatic indentation detection
+
+## ⌨️ Key Bindings Reference
 
 **Leader Key:** `<Space>`
 
-### File Operations
+### Core Navigation & Editing
+| Keymap | Mode | Action | Description |
+|--------|------|--------|-------------|
+| `<Esc>` | n | Clear Highlights | Clear search highlights |
+| `<C-h/j/k/l>` | n | Window Navigation | Move focus between splits |
+| `<C-h/j/k/l>` | i | Cursor Movement | Move cursor in insert mode |
+| `<C-b>` | i | Word Back | Move to beginning of word in insert mode |
+| `<C-w>` | i | Word Forward | Move to end of word in insert mode |
+
+### File Operations (Telescope)
 | Keymap | Action | Description |
 |--------|--------|-------------|
-| `<leader>ff` | Find Files | Fuzzy find files in project |
+| `<leader>ff` | Find Files | Fuzzy find files in project (ivy theme) |
 | `<leader>fa` | Find All | Find all files (including hidden) |
 | `<leader>fw` | Find Word | Find files containing word under cursor |
 | `<leader>fl` | Live Grep | Search text across all files |
 | `<leader>fb` | Find Buffers | Search open buffers |
+| `<leader>fh` | Find Help | Search help documentation |
 | `<leader>fo` | Old Files | Recently opened files |
+| `<leader>fz` | Find in Buffer | Fuzzy find in current buffer |
 | `<leader>fg` | Multi-grep | Advanced search with file filtering |
+| `<leader>fk` | Find Keymaps | Search available keymaps |
+| `<leader>fs` | Find String | Find string under cursor |
+| `<leader>fd` | Find Diagnostics | Show all LSP diagnostics |
+| `<space>fb` | File Browser | Open telescope file browser |
 
 ### Buffer Management
 | Keymap | Action | Description |
@@ -129,50 +202,173 @@ After installation, run `:checkhealth` to verify everything is working correctly
 | `<leader>br` | Close Right | Close buffers to the right |
 | `<leader>bl` | Close Left | Close buffers to the left |
 
-### Git Integration
+### LSP & Code Intelligence
 | Keymap | Action | Description |
 |--------|--------|-------------|
-| `<leader>cm` | Git Commits | Browse git commit history |
-| `<leader>gt` | Git Status | View git status in Telescope |
-
-### LSP & Diagnostics
-| Keymap | Action | Description |
-|--------|--------|-------------|
-| `<leader>fd` | Find Diagnostics | Show all diagnostics |
 | `<leader>q` | Quickfix | Open diagnostic quickfix list |
-| `gd` | Go to Definition | Jump to symbol definition |
-| `gr` | References | Find all references |
-| `K` | Hover | Show documentation |
+| `<leader>rn` | LSP Rename | Rename symbol under cursor |
+| `<leader>ca` | Code Action | Execute code actions |
+| `<leader>f` | Format | Format current buffer |
+| `grr` | References | Find all references (Telescope) |
+| `gri` | Implementation | Go to implementation (Telescope) |
+| `grd` | Definition | Go to definition (Telescope) |
+| `grD` | Declaration | Go to declaration |
+| `grt` | Type Definition | Go to type definition (Telescope) |
+| `gO` | Document Symbols | Show document symbols (Telescope) |
+| `gW` | Workspace Symbols | Show workspace symbols (Telescope) |
+| `<leader>th` | Toggle Hints | Toggle inlay hints |
+| `K` | Hover | Show hover documentation |
 
-### Navigation
+### Git Integration
+| Keymap | Mode | Action | Description |
+|--------|------|--------|-------------|
+| `<leader>cm` | n | Git Commits | Browse git commit history |
+| `<leader>gt` | n | Git Status | View git status in Telescope |
+| `]c` | n | Next Hunk | Jump to next git change |
+| `[c` | n | Prev Hunk | Jump to previous git change |
+| `<leader>hs` | n/v | Stage Hunk | Stage git hunk |
+| `<leader>hr` | n/v | Reset Hunk | Reset git hunk |
+| `<leader>hS` | n | Stage Buffer | Stage entire buffer |
+| `<leader>hu` | n | Undo Stage | Undo stage hunk |
+| `<leader>hR` | n | Reset Buffer | Reset entire buffer |
+| `<leader>hp` | n | Preview Hunk | Preview git hunk |
+| `<leader>hb` | n | Blame Line | Show git blame |
+| `<leader>hd` | n | Diff Index | Diff against index |
+| `<leader>hD` | n | Diff Last | Diff against last commit |
+| `<leader>tb` | n | Toggle Blame | Toggle line blame |
+| `<leader>tD` | n | Toggle Deleted | Toggle show deleted lines |
+
+### Advanced Git (Diffview)
 | Keymap | Action | Description |
 |--------|--------|-------------|
-| `<C-h/j/k/l>` | Window Navigation | Move between splits |
-| `<Esc>` | Clear Highlights | Clear search highlights |
+| `<leader>gd` | Open Diff View | Open git diff view |
+| `<leader>gh` | File History | Open file history |
+| `<leader>gH` | Current File History | Open current file history |
+| `<leader>gc` | Close Diff View | Close diff view |
+| `<leader>gm` | Compare Previous | Compare with previous commit |
+| `<leader>gb` | Compare Branch | Compare branch with origin/main |
+
+### Debugging (DAP)
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<F5>` | Continue | Start/continue debugging |
+| `<F1>` | Step Into | Debug step into |
+| `<F2>` | Step Over | Debug step over |
+| `<F3>` | Step Out | Debug step out |
+| `<F7>` | Toggle UI | Toggle debug UI |
+| `<leader>b` | Toggle Breakpoint | Toggle breakpoint |
+| `<leader>B` | Set Breakpoint | Set conditional breakpoint |
+| `<leader>dr` | Debug REPL | Open debug REPL |
+| `<leader>de` | Evaluate | Evaluate expression |
+
+### Testing
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `<leader>tn` | Test Nearest | Run nearest test |
+| `<leader>tf` | Test File | Run current test file |
+| `<leader>ts` | Test Suite | Run entire test suite |
+| `<leader>tl` | Test Last | Run last test |
+
+### Code Commenting
+| Keymap | Mode | Action | Description |
+|--------|------|--------|-------------|
+| `gcc` | n | Line Comment | Toggle line comment |
+| `gbc` | n | Block Comment | Toggle block comment |
+| `gc` | v | Comment Selection | Comment selection |
+| `gb` | v | Block Comment | Block comment selection |
+| `gcO` | n | Comment Above | Add comment above line |
+| `gco` | n | Comment Below | Add comment below line |
+| `gcA` | n | Comment EOL | Add comment at end of line |
+
+### Text Objects & Surround (Mini.nvim)
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `sa{motion}` | Surround Add | Add surrounding characters |
+| `sd{char}` | Surround Delete | Delete surrounding characters |
+| `sr{old}{new}` | Surround Replace | Replace surrounding characters |
+| `va)`, `vi"`, etc. | Text Objects | Enhanced around/inside text objects |
+
+### File Explorer
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `\` | Toggle Neo-tree | Reveal/close file explorer |
+
+### Treesitter Incremental Selection
+| Keymap | Action | Description |
+|--------|--------|-------------|
+| `gnn` | Init Selection | Start incremental selection |
+| `grj` | Node Incremental | Expand selection to next node |
+| `grc` | Scope Incremental | Expand selection to scope |
+| `grm` | Node Decremental | Shrink selection |
+
+### Terminal
+| Keymap | Mode | Action | Description |
+|--------|------|--------|-------------|
+| `<Esc><Esc>` | t | Exit Terminal | Exit terminal mode |
+
+### Which-key Groups
+The configuration includes organized keymap groups for better discoverability:
+- `<leader>f` - **Find** (Telescope operations)
+- `<leader>c` - **Code** (LSP actions)
+- `<leader>r` - **Rename** (Refactoring)
+- `<leader>g` - **Git** (Git operations)
+- `<leader>b` - **Buffers** (Buffer management)
+- `<leader>t` - **Toggle** (Toggle various features)
+- `<leader>n` - **Neotest** (Testing)
+- `<leader>h` - **Git Hunk** (Git hunk operations)
 
 ## 🏗️ Configuration Structure
 
 ```
 ~/.config/nvim/
-├── init.lua                    # Main entry point and core settings
-├── lazy-lock.json             # Plugin version lockfile
+├── init.lua                      # Main entry point and core settings
+├── lazy-lock.json               # Plugin version lockfile
 ├── lua/
 │   ├── config/
 │   │   └── telescope/
-│   │       └── multigrep.lua  # Custom multigrep functionality
+│   │       └── multigrep.lua    # Custom multigrep functionality
+│   ├── kickstart/
+│   │   └── health.lua           # Health check utilities
 │   └── custom/
-│       └── plugins/           # Modular plugin configurations
-│           ├── lsp.lua        # Language server setup
-│           ├── telescope.lua  # File finder & search
-│           ├── blink.lua      # Code completion
-│           ├── bufferline.lua # Buffer management UI
-│           ├── colorscheme.lua# Theme configuration
-│           ├── treesitter.lua # Syntax highlighting
-│           ├── gitsigns.lua   # Git integration
-│           ├── python.lua     # Python debugging
-│           └── ...            # Other plugin configs
-└── README.md                  # This file
+│       └── plugins/             # Modular plugin configurations
+│           ├── init.lua         # Plugin loader
+│           ├── lsp.lua          # Language server setup (LSP, Mason)
+│           ├── telescope.lua    # File finder & search
+│           ├── blink.lua        # Code completion engine
+│           ├── bufferline.lua   # Buffer management UI
+│           ├── colorscheme.lua  # Theme configuration (Tokyo Night)
+│           ├── treesitter.lua   # Syntax highlighting & parsing
+│           ├── which-key.lua    # Keymap hints and documentation
+│           ├── gitsigns.lua     # Git integration & hunks
+│           ├── diffview.lua     # Advanced git diff views
+│           ├── debug.lua        # Debug Adapter Protocol (DAP)
+│           ├── neotest.lua      # Test runner (vim-test)
+│           ├── conform.lua      # Code formatting
+│           ├── lint.lua         # Linting support
+│           ├── neo-tree.lua     # File explorer
+│           ├── telescope_browser.lua # Telescope file browser
+│           ├── comment.lua      # Smart commenting
+│           ├── autopairs.lua    # Auto bracket pairing
+│           ├── todo-comments.lua # TODO/FIXME highlighting
+│           ├── mini.lua         # Statusline, surround, textobjects
+│           ├── surround.lua     # Additional surround config
+│           ├── guess-indent.lua # Automatic indentation detection
+│           ├── indent_line.lua  # Indentation guides
+│           ├── lazydev.lua      # Lua development support
+│           └── 99.lua           # Additional configurations
+├── CLAUDE.md                    # Project instructions & conventions
+└── README.md                    # This documentation
 ```
+
+### Language Servers Configured
+- **Python**: `pyright` - Type checking and language features
+- **Lua**: `lua_ls` - Lua language support for Neovim development
+- **Grammar/Prose**: `harper_ls` - Grammar and spell checking for markdown, text, and documentation
+
+### Formatters & Linters
+- **Lua**: `stylua` - Code formatting
+- **Python**: `isort`, `black` - Import sorting and code formatting
+- **Markdown**: `markdownlint` - Markdown linting
 
 ## 🔧 Customization
 
