@@ -2,12 +2,124 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.8',
+    cmd = 'Telescope',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
+
+    keys = {
+      -- Files
+      {
+        '<leader>ff',
+        function()
+          require('telescope.builtin').find_files()
+        end,
+        desc = 'Find files',
+      },
+      {
+        '<leader>fa',
+        function()
+          require('telescope.builtin').find_files {
+            follow = true,
+            no_ignore = true,
+            hidden = true,
+          }
+        end,
+        desc = 'Find all files',
+      },
+      {
+        '<leader>fw',
+        function()
+          require('telescope.builtin').find_files {
+            default_text = vim.fn.expand '<cword>',
+          }
+        end,
+        desc = 'Find files with word under cursor',
+      },
+      {
+        '<leader>fl',
+        function()
+          require('telescope.builtin').live_grep()
+        end,
+        desc = 'Live grep',
+      },
+      {
+        '<leader>fb',
+        function()
+          require('telescope.builtin').buffers()
+        end,
+        desc = 'Find buffers',
+      },
+      {
+        '<leader>fh',
+        function()
+          require('telescope.builtin').help_tags()
+        end,
+        desc = 'Find help',
+      },
+      {
+        '<leader>fo',
+        function()
+          require('telescope.builtin').oldfiles()
+        end,
+        desc = 'Old files',
+      },
+      {
+        '<leader>fz',
+        function()
+          require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+            winblend = 10,
+            previewer = false,
+          })
+        end,
+        desc = 'Find in buffer',
+      },
+
+      -- Git
+      {
+        '<leader>cm',
+        function()
+          require('telescope.builtin').git_commits()
+        end,
+        desc = 'Git commits',
+      },
+      {
+        '<leader>gt',
+        function()
+          require('telescope.builtin').git_status()
+        end,
+        desc = 'Git status',
+      },
+
+      -- Misc
+      {
+        '<leader>fk',
+        function()
+          require('telescope.builtin').keymaps()
+        end,
+        desc = 'Find keymaps',
+      },
+      {
+        '<leader>fs',
+        function()
+          require('telescope.builtin').grep_string()
+        end,
+        desc = 'Find string',
+      },
+      {
+        '<leader>fd',
+        function()
+          require('telescope.builtin').diagnostics()
+        end,
+        desc = 'Find diagnostics',
+      },
+    },
+
     config = function()
-      require('telescope').setup {
+      local telescope = require 'telescope'
+
+      telescope.setup {
         pickers = {
           find_files = {
             theme = 'ivy',
@@ -18,40 +130,9 @@ return {
         },
       }
 
-      require('telescope').load_extension 'fzf'
+      telescope.load_extension 'fzf'
 
-      -- NvChad style telescope keymaps
-      local builtin = require 'telescope.builtin'
-
-      -- File operations
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
-      vim.keymap.set('n', '<leader>fa', function()
-        builtin.find_files { follow = true, no_ignore = true, hidden = true }
-      end, { desc = 'Find all files' })
-      vim.keymap.set('n', '<leader>fw', function()
-        local word = vim.fn.expand('<cword>')
-        builtin.find_files({ default_text = word })
-      end, { desc = 'Find files with word under cursor' })
-      vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = 'Find live grep' })
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
-      vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help' })
-      vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Find old files' })
-      vim.keymap.set('n', '<leader>fz', function()
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end, { desc = 'Find in current buffer' })
-
-      -- Git
-      vim.keymap.set('n', '<leader>cm', builtin.git_commits, { desc = 'Git commits' })
-      vim.keymap.set('n', '<leader>gt', builtin.git_status, { desc = 'Git status' })
-
-      -- Additional useful ones
-      vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find keymaps' })
-      vim.keymap.set('n', '<leader>fs', builtin.grep_string, { desc = 'Find string under cursor' })
-      vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find diagnostics' })
-
+      -- Load multigrep *after* telescope exists
       require('config.telescope.multigrep').setup()
     end,
   },
