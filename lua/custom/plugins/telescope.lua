@@ -1,11 +1,12 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
+    branch = 'master', -- Use latest to fix ft_to_lang compatibility
     cmd = 'Telescope',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      'nvim-treesitter/nvim-treesitter',
     },
 
     keys = {
@@ -120,9 +121,20 @@ return {
       local telescope = require 'telescope'
 
       telescope.setup {
+        defaults = {},
         pickers = {
           find_files = {
             theme = 'ivy',
+          },
+          git_status = {
+            mappings = {
+              i = {
+                ['<C-a>'] = 'git_staging_toggle', -- Ctrl+a to stage/unstage in insert mode
+              },
+              n = {
+                ['<space>'] = 'git_staging_toggle', -- Space to stage/unstage in normal mode
+              },
+            },
           },
         },
         extensions = {
