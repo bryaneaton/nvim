@@ -9,6 +9,11 @@ return {
     local cwd = vim.uv.cwd()
     local basename = vim.fs.basename(cwd)
     _99.setup {
+      -- Using OpenCode provider
+      provider = _99.OpenCodeProvider,
+      -- Correct model format for opencode
+      model = 'anthropic/claude-sonnet-4-5',
+
       logger = {
         level = _99.DEBUG,
         path = '/tmp/' .. basename .. '.99.debug',
