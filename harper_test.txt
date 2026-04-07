@@ -1,0 +1,29 @@
+Harper LSP Plain Text Test File
+==================================
+
+This is a plain text file to test Harper LSP in different file formats.
+
+Common Spelling Mistakes:
+- recieve (should be receive)
+- occured (should be occurred)
+- seperate (should be separate)
+- definitly (should be definitely)
+
+Grammar Errors:
+- I could of done better. (should be "could have")
+- Between you and I... (should be "between you and me")
+- I seen that movie. (should be "I saw" or "I have seen")
+
+Test Commands to Run in Neovim:
+1. Open this file: :e harper_test.txt
+2. Check diagnostics: :lua vim.diagnostic.open_float()
+3. See all diagnostics: :lua vim.diagnostic.setqflist()
+4. Try code actions: gra or <leader>ca on highlighted words
+5. Check LSP status: :LspInfo
+6. See attached clients: :lua print(vim.inspect(vim.lsp.get_clients()))
+
+Expected Behavior:
+- Words with errors should be underlined or highlighted
+- Hovering should show suggestions
+- Code actions should offer corrections
+- Diagnostics should appear in floating window

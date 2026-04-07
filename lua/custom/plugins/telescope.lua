@@ -32,9 +32,7 @@ return {
       {
         '<leader>fw',
         function()
-          require('telescope.builtin').find_files {
-            default_text = vim.fn.expand '<cword>',
-          }
+          require('telescope.builtin').grep_string()
         end,
         desc = 'Find files with word under cursor',
       },

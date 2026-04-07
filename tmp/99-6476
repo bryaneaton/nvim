@@ -1,0 +1,19 @@
+def divide_numbers(a, b):
+    """Divide two numbers and return the result.
+    
+    Args:
+        a: Numerator (dividend)
+        b: Denominator (divisor)
+        
+    Returns:
+        float: Result of a divided by b
+        
+    Raises:
+        ValueError: If b is zero
+        TypeError: If a or b are not numeric types
+    """
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        raise TypeError("Both arguments must be numeric types")
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b

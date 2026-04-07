@@ -1,0 +1,12 @@
+[
+  {
+    "permission": "external_directory",
+    "pattern": "/Users/bryan/.config/nvim/tmp/*",
+    "action": "allow"
+  },
+  {
+    "permission": "write",
+    "pattern": "/Users/bryan/.config/nvim/tmp/*",
+    "action": "allow"
+  }
+]
