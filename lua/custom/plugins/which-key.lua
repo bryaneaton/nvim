@@ -43,6 +43,12 @@ return {
         },
       },
 
+      -- Only trigger which-key for leader mappings.
+      -- This keeps built-in keys like `v` from opening the popup.
+      triggers = {
+        { '<leader>', mode = { 'n', 'v' } },
+      },
+
       -- Document existing key chains
       spec = {
         { '<leader>f', group = 'Find' },
