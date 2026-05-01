@@ -1,6 +1,7 @@
 return {
   {
     'saghen/blink.cmp',
+    dependencies = { 'saghen/blink.lib' },
     event = 'InsertEnter',
     version = '1.*',
     build = 'cargo build --release',
