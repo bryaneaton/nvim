@@ -5,3 +5,9 @@ nvim
 
 spell/
 lazy-lock.json
+
+# Temporary files
+tmp/
+.cache/
+*.tmp
+*.cache
