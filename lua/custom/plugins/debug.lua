@@ -93,6 +93,24 @@ return {
       end,
       desc = 'Debug: Evaluate Expression',
     },
+    -- Clear all breakpoints
+    {
+      '<leader>dc',
+      function()
+        require('dap').clear_breakpoints()
+        vim.notify('All breakpoints cleared', vim.log.levels.INFO)
+      end,
+      desc = 'Debug: Clear All Breakpoints',
+    },
+    -- Show breakpoint list
+    {
+      '<leader>dl',
+      function()
+        require('dap').list_breakpoints()
+        vim.cmd 'copen'
+      end,
+      desc = 'Debug: List Breakpoints',
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -115,14 +133,43 @@ return {
       },
     }
 
-    -- Dap UI setup
+    -- Dap UI setup with enhanced layout
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+      icons = { expanded = '▾', collapsed = '▸', current_frame = '▸' },
+      mappings = {
+        -- Use a table to apply multiple mappings
+        expand = { '<CR>', '<2-LeftMouse>' },
+        open = 'o',
+        remove = 'd',
+        edit = 'e',
+        repl = 'r',
+        toggle = 't',
+      },
+      -- Use a tree-like layout for better visibility
+      layouts = {
+        {
+          elements = {
+            { id = 'scopes', size = 0.35 },
+            { id = 'breakpoints', size = 0.20 },
+            { id = 'stacks', size = 0.25 },
+            { id = 'watches', size = 0.20 },
+          },
+          size = 40,
+          position = 'left',
+        },
+        {
+          elements = {
+            { id = 'repl', size = 0.60 },
+            { id = 'console', size = 0.40 },
+          },
+          size = 0.25,
+          position = 'bottom',
+        },
+      },
       controls = {
+        enabled = true,
+        element = 'repl',
         icons = {
           pause = '⏸',
           play = '▶',
@@ -135,23 +182,84 @@ return {
           disconnect = '⏏',
         },
       },
+      floating = {
+        max_height = nil,
+        max_width = nil,
+        border = 'rounded',
+        mappings = {
+          close = { 'q', '<Esc>' },
+        },
+      },
+      render = {
+        max_type_length = nil,
+        max_value_lines = 100,
+      },
     }
 
-    -- Change breakpoint icons
-    -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-    -- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-    -- local breakpoint_icons = vim.g.have_nerd_font
-    --     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-    --   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-    -- for type, icon in pairs(breakpoint_icons) do
-    --   local tp = 'Dap' .. type
-    --   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-    --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
-    -- end
+    -- Change breakpoint icons - ENABLED with better colors
+    vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = '#e51400', bold = true })
+    vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = '#ff9f00', bold = true })
+    vim.api.nvim_set_hl(0, 'DapBreakpointRejected', { fg = '#808080', italic = true })
+    vim.api.nvim_set_hl(0, 'DapLogPoint', { fg = '#61afef', bold = true })
+    vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#98c379', bg = '#2d3c2d', bold = true })
+
+    local breakpoint_icons = vim.g.have_nerd_font
+        and { Breakpoint = '●', BreakpointCondition = '◆', BreakpointRejected = '○', LogPoint = '◉', Stopped = '→' }
+      or { Breakpoint = '●', BreakpointCondition = '◆', BreakpointRejected = '○', LogPoint = '◉', Stopped = '→' }
+
+    for type, icon in pairs(breakpoint_icons) do
+      local tp = 'Dap' .. type
+      local hl = (type == 'Stopped') and 'DapStopped' or 'DapBreakpoint'
+      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl, linehl = (type == 'Stopped') and 'DapStopped' or nil })
+    end
+
+    -- Highlight the current line when stopped
+    vim.api.nvim_set_hl(0, 'DapStoppedLine', { bg = '#2d3c2d', underline = true })
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+    -- Disable automatic launch.json loading from .vscode folders
+    vim.api.nvim_clear_autocmds({ group = 'dap-launch.json' })
+
+    -- Highlight the current line when stopped at a breakpoint
+    dap.listeners.after.event_stopped['breakpoint_highlight'] = function(session, body)
+      -- Add visual indicator
+      vim.defer_fn(function()
+        local source_name = body and body.source and body.source.name or 'unknown'
+        vim.cmd("echo 'Stopped at breakpoint in " .. source_name .. "'")
+      end, 100)
+    end
+
+    -- Disable loading launch.json from .vscode folder
+    dap.set_log_level('DEBUG')
+    
+    -- Configure Python debugger without launch.json
+    dap.configurations.python = {
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch file',
+        program = '${file}',
+        pythonPath = function()
+          return '/usr/bin/env python3'
+        end,
+      },
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch file with arguments',
+        program = '${file}',
+        args = function()
+          local args_string = vim.fn.input('Arguments: ')
+          return vim.split(args_string, ' ')
+        end,
+        pythonPath = function()
+          return '/usr/bin/env python3'
+        end,
+      },
+    }
 
     -- Install golang specific config
     require('dap-go').setup {
@@ -163,6 +271,7 @@ return {
     }
 
     -- Install Python specific config
+    -- Using Python 3.13 virtual environment with debugpy installed
     require('dap-python').setup '~/.virtualenvs/debugpy/bin/python'
   end,
 }
