@@ -6,7 +6,7 @@ return {
     version = '1.*',
     build = 'cargo build --release',
     opts = {
-      keymap = { preset = 'default' },
+      keymap = { preset = 'super-tab' },
       appearance = {
         nerd_font_variant = 'mono',
       },
